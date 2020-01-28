@@ -1,0 +1,130 @@
+---
+swagger: "2.0"
+info:
+  description: Cummins Customer API
+  version: 1.0.0
+  title: CumminsCustomerAPI
+host: virtserver.swaggerhub.com
+basePath: /dev
+tags:
+- name: developers
+  description: Operations available to regular developers
+schemes:
+- https
+paths:
+  /customers:
+    post:
+      tags:
+      - addNewCustomer
+      summary: Adds a new customer
+      description: Adds an customer to the databse
+      operationId: createCustomer
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: customer
+        description: Add firstName, lastName, address, email to database
+        required: false
+        schema:
+          $ref: '#/definitions/Customer'
+      responses:
+        201:
+          description: customer created successfully
+          schema:
+            type: integer
+            description: The customer ID.
+        400:
+          description: Invalid input
+  /customers/{id}:
+    get:
+      tags:
+      - searchCustomerById
+      summary: search customer's information by id
+      description: |
+        Customer's firstName, lastName, address and email can be retrieved by id
+      operationId: getCustomerById
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: Pass id and return details of matched customer's information
+        required: true
+        type: string
+      responses:
+        200:
+          description: Customer's data found
+          schema:
+            $ref: '#/definitions/Customer'
+        404:
+          description: customer not found
+  /customers:
+    get:
+      tags:
+      - searchAllCustomers
+      summary: 
+      description: Gets all customers in databse
+      operationId: getAllCustomers
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        200:
+          description: Get all customers successfully
+          schema:
+            $ref: '#/definitions/Customer'
+        404:
+          description: customers not found
+  /customers/{id}:
+    delete:
+      tags:
+      - deleteCustomerById
+      summary: 
+      description: Delete customer in databse
+      operationId: deleteCustomer
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: Pass id and delete matched customer in database
+        required: true
+        type: string
+      responses:
+        200:
+          description: Delete customer successfully
+          schema:
+            $ref: '#/definitions/Customer'
+        404:
+          description: Customer not found
+definitions:
+  Customer:
+    type: object
+    required:
+    - firstName
+    - lastName
+    - address
+    - emailAddress
+    properties:
+      firstName:
+        type: string
+      lastName:
+        type: string
+      address:
+        type: string
+        format: address
+      emailAddress:
+        type: string
+
+  
+  
+      
+
+
+ 
